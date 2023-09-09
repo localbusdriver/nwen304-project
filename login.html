@@ -16,21 +16,38 @@
   </head>
 
   <body>
-    <div class="main">
+    <section class="sub-header">
+      <nav>
+        <div class="logo-area">
+          <img src="./images/pro.png" class="logo" />
+          <h2>Ultimate Protein</h2>
+        </div> 
+
+        <div class="nav-links" id="nav-links">
+          <ul>
+           <li><a href="index.html">Home</a></li>
+           <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+      </nav>
+    </section>
+
+    <section class="overall-form-box">
       <div class="form-box">
-        <h1>Sign Up</h1>
+        <h1>Login</h1>
         <form>  
           <div class="input-group">
             <div class="input-field">
-              <i class="fa-regular fa-user"></i>
-              <input type="text" id="username" name="username" />
+              <i class="fa-solid fa-user"></i>
+              <input type="text" placeholder="username or email" />
             </div>
-            <div class="">
-              <i class="fa-regular fa-lock"></i>
-              <input type="text" id="pass" name="pass" />
+
+            <div class="input-field">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" placeholder="password" /> 
             </div>
+
           </div>
-        </form>
       </div>
-    </div>
+    </section>
   </body>

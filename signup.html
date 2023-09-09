@@ -3,8 +3,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign Up - SUGOI Protein</title>
-    <link rel="loginsignup-stylesheet" href="loginsignup-style.css" />
+    <title>Login - SUGOI Protein</title>
+    <link rel="stylesheet" href="loginsignup-style.css" />
     <!-- <script src="script.js"></script> -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,21 +16,43 @@
   </head>
 
   <body>
-    <div class="main">
+    <section class="sub-header">
+      <nav>
+        <div class="logo-area">
+          <img src="./images/pro.png" class="logo" />
+          <h2>Ultimate Protein</h2>
+        </div> 
+
+        <div class="nav-links" id="nav-links">
+          <ul>
+           <li><a href="index.html">Home</a></li>
+           <li><a href="login.html">Login</a></li>
+          </ul>
+        </div>
+      </nav>
+    </section>
+
+    <section class="overall-form-box">
       <div class="form-box">
         <h1>Sign Up</h1>
         <form>  
           <div class="input-group">
             <div class="input-field">
-              <i class="fa-regular fa-user"></i>
-              <input type="text" id="username" name="username" />
+              <i class="fa-solid fa-user"></i>
+              <input type="text" placeholder="username or email" />
             </div>
-            <div class="">
-              <i class="fa-regular fa-lock"></i>
-              <input type="text" id="pass" name="pass" />
+
+              <div class="input-field">
+                <i class="fa-solid fa-user"></i>
+                <input type="email" placeholder="email" />
+              </div>
+
+            <div class="input-field">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" placeholder="password" /> 
             </div>
+
           </div>
-        </form>
       </div>
-    </div>
+    </section>
   </body>
