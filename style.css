@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;  
+}
+
+.main {
+    font-size: 1.2rem;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to right, rgb(106, 63, 126), rgb(185, 69, 69));
+    overflow: hidden;
+    position: relative;
+}
+.ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    
+
+}
+
+.logo{
+    height:200px;
+    width:200px;
+    margin: top 10px;;
+}
