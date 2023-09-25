@@ -32,3 +32,7 @@ npm install nodemailer
 npm install express-session
 
 Steps above are all needed in order to run node server.js else shows you some error
+
+#This is for google login and for registering and verifing
+npm install passport passport-google-oauth20 express-session
+
