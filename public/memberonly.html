@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Only Page</title>
+</head>
+<body>
+    <h1>Welcome, <span id="username"></span></h1>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.get('/get-username', function(data) {
+                $('#username').text(data.username);
+            });
+        });
+    </script>
+</body>
+</html>

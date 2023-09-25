@@ -260,4 +260,30 @@ app.get('/get-username', (req, res) => {
         res.json({ username: 'Guest' });
     }
 });
+//This endpoint is to remove item from the cart
+app.post('/remove-from-cart/:id', checkLoggedIn, (req, res) => {
+    const itemId = req.params.id;
 
+    if (req.session.cart) {
+        const index = req.session.cart.indexOf(itemId);
+        if (index > -1) {
+            req.session.cart.splice(index, 1);  //remove item from the cart
+        }
+    }
+
+    res.json({ success: true });
+});
+
+app.get('/checkout', checkLoggedIn, async (req, res) => {
+    //Made endpoint for checkout page
+    const cartItemIds = req.session.cart || [];
+    const cartItems = await Item.find({ _id: { $in: cartItemIds } });
+    res.render('checkout', { cartItems });
+});
+
+app.get('/cart-status', (req, res) => {
+    const user = 'sampleUser';
+
+    const cart = getUserCart(user);
+    res.json(cart);
+});

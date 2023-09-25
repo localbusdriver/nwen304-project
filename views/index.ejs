@@ -272,6 +272,9 @@
                     <button type="submit" class="btn btn-secondary">Filter</button>
                 </div>
             </div>
+            <div class="mt-4">
+                <a href="/checkout" class="btn btn-success">Go to Checkout</a>
+            </div>
         </form>
 
         <div class="row"> 
@@ -308,7 +311,7 @@
     
                 <div class="button">
                     <form action="/add-to-cart/<%= item._id %>" method="post">
-                        <button data-item-id="<%= item._id %>" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                        <button data-item-id="<%= item._id %>" data-added="false" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
                     </form>
                 </div>
             </div>
@@ -404,36 +407,57 @@
                         event.preventDefault();  
             
                         const itemId = button.dataset.itemId;
+                        const isAddedToCart = button.getAttribute('data-added') === 'true'; // Check if the item is added to the cart
             
-                        fetch(`/add-to-cart/${itemId}`, {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error("Network response was not ok");
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                alert("Item added to cart!");
-                                button.textContent = "Added to Cart";  
-                                button.disabled = true; 
-                            } else {
+                        if (isAddedToCart) {
+                            // If the item is already in the cart, remove it
+                            fetch(`/remove-from-cart/${itemId}`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert("Item has been removed from cart!");
+                                    button.innerText = "Add to Cart";  // Change the button text
+                                    button.setAttribute('data-added', 'false'); // Update the button state
+                                } else {
+                                    alert("Error removing item from cart.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error("There was a problem with the fetch operation:", error.message);
+                                alert("Error removing item from cart.");
+                            });
+            
+                        } else {
+                            // If the item is not in the cart, add it
+                            fetch(`/add-to-cart/${itemId}`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert("Item added to cart!");
+                                    button.innerText = "Added to Cart";  // Change the button text
+                                    button.setAttribute('data-added', 'true'); // Update the button state
+                                } else {
+                                    alert("Error adding item to cart.");
+                                }
+                            })
+                            .catch(error => {
+                                console.error("There was a problem with the fetch operation:", error.message);
                                 alert("Error adding item to cart.");
-                            }
-                        })
-                        .catch(error => {
-                            console.error("There was a problem with the fetch operation:", error.message);
-                            alert("Error adding item to cart.");
-                        });
+                            });
+                        }
                     });
                 });
             });
-            
             
         </script>
 </body>

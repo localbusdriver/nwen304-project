@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Checkout</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let total = 0; %>
+                <% cartItems.forEach(item => { %>
+                    <% total += item.price; %>
+                    <tr>
+                        <td><%= item.name %></td>
+                        <td>$<%= item.price.toFixed(2) %></td>
+                    </tr>
+                <% }); %>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>$<%= total.toFixed(2) %></strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
