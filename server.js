@@ -59,6 +59,12 @@ app.use(session({
     }
 }));
 
+app.get('/memberonly.html', checkLoggedIn, (req, res) => {
+    res.sendFile(__dirname + '/public/memberonly.html');
+});
+
+app.use(express.static('public'));
+
 // //CRUD 
 // app.get('/items', async (req, res) => {  //Set the endpoint for items
 //     const items = await Item.find();
@@ -287,3 +293,5 @@ app.get('/cart-status', (req, res) => {
     const cart = getUserCart(user);
     res.json(cart);
 });
+
+

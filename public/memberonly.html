@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Only Page</title>
     <link rel="stylesheet" href="memberonly.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
+    <button id="logoutButton">Logout</button>
     <div class="container">
         <div class="card">
           <div class="face face1">
@@ -66,6 +68,17 @@
                 $('#username').text(data.username);
             });
         });
+    </script>
+    <script>
+        //When log out button is clicked
+        $('#logoutButton').click(function() {
+            $.get('/logout', function(data) {
+                // Display an alert message
+                alert('You have logged out');
+                window.location.href = "/index.html";
+            });
+        });
+        
     </script>
 </body>
 </html>

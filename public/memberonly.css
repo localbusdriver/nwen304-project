@@ -141,3 +141,25 @@ body{
     color: rgb(226, 233, 233);
     font-size: 5rem;
   }
+
+  #logoutButton {
+    position: absolute; 
+    top: 10px; 
+    right: 10px; /* placement for logout button*/
+    background: linear-gradient(45deg, #f06, #9f6);
+    border: none;
+    color: white;
+    padding: 15px 30px; 
+    font-size: 20px; 
+    border-radius: 8px; 
+    cursor: pointer;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s, transform 0.3s;
+    
+}
+
+#logoutButton:hover {
+    background: linear-gradient(45deg, #e05, #8e5);
+    transform: scale(1.05);
+}
+
