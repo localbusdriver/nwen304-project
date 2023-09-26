@@ -4,9 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member Only Page</title>
+    <link rel="stylesheet" href="memberonly.css">
 </head>
 <body>
-    <h1>Welcome, <span id="username"></span></h1>
+    <div class="container">
+        <div class="card">
+          <div class="face face1">
+            <div class="content">
+               <i class="fab fa-windows"></i>            
+              <h3>About us</h3>
+            </div>
+          </div>
+          <div class="face face2">
+            <div class="content">
+              <p>Go to main page</p>
+              <a href="index.html" type="button">Read More</a>
+            </div>
+          </div>
+       </div>
+       
+       <div class="card">
+          <div class="face face1">
+            <div class="content">               
+            <h3>Items</h3>
+            </div>
+          </div>
+          <div class="face face2">
+            <div class="content">
+              <p>View items and purchase them</p>
+              <a href="items" type="button">Get item</a>
+            </div>
+          </div>
+       </div>
+       
+       
+       <div class="card">
+          <div class="face face1">
+            <div class="content">
+              <i class="fab fa-apple"></i>
+               <h3>view cart</h3>
+            </div>
+          </div>
+          <div class="face face2">
+            <div class="content">
+              <p>View your cart</p>
+              <a href="checkout" type="button">Go to checkout</a>
+            </div>
+          </div>
+       </div>
+     </div>
+
+
+     <h1>Welcome, <span id="username"></span></h1>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
