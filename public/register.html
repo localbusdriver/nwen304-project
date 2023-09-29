@@ -12,10 +12,11 @@
   </head>
   <body>
     <div class="card">
-        <form action="/register" method="post">
+        <form action="/register" method="post" onsubmit="return validateForm();">
             <div class="content">
+                
                 <!-- <h2>神</h2>  for the additional design -->
-                <h3 style="font-size: 3em; margin-top: -20px;">Register</h3>
+                <h3 class="register-title">Register</h3>
                 <input style="width: 100%; padding: 10px; margin: 10px 0;" type="text" name="email" placeholder="Email" required />
                 <input style="width: 100%; padding: 10px; margin: 10px 0;" type="text" name="username" placeholder="Username" required />
                 <div class="password-wrapper">
@@ -53,18 +54,25 @@
             eyeIcon.textContent = "🙈"; 
         }
     }
-        function checkPasswordComplexity() {
-            const passwordInput = document.getElementById("password").value;
-            const feedback = document.getElementById("passwordFeedback");
-
-            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-            if (!regex.test(passwordInput)) {
-                feedback.textContent = "Password should have at least 8 characters, one uppercase, one lowercase, one number, and one special character.";
-            } else {
-                feedback.textContent = "";
-            }
+    function validateForm() {
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const feedback = document.getElementById("passwordFeedback");
+    
+        if (password !== confirmPassword) {
+            feedback.textContent = "Passwords do not match, please try again.";
+            return false;
         }
+    
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        if (!regex.test(password)) {
+            feedback.textContent = "Password should have at least 8 characters, one uppercase, one lowercase, and one number.";
+            return false;
+        }
+    
+        feedback.textContent = ""; // Clear feedback if no errors
+        return true;
+    }
     </script>
   </body>
 </html>
