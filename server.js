@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const dotenv = requre('dotenv');
-
+require('dotenv').config()
 const app = express();
 
 
@@ -47,7 +46,6 @@ const Item = mongoose.model('Item', ItemSchema);
 const session = require('express-session');
 
 app.use(express.static('public'));  //make sure to set initial path to public
-app.use(dotenv.config());
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
