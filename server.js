@@ -4,11 +4,14 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const dotenv = requre('dotenv');
 
 const app = express();
 
+
+const MONGO_DB = process.env.MONGO_DB || '';
 //connect t0 database
-mongoose.connect('mongodb://localhost/nwen304', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const ItemSchema = new mongoose.Schema({  //This is for item to store database
     name: String,
@@ -44,7 +47,7 @@ const Item = mongoose.model('Item', ItemSchema);
 const session = require('express-session');
 
 app.use(express.static('public'));  //make sure to set initial path to public
-
+app.use(dotenv.config());
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
