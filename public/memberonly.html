@@ -1,67 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Only Page</title>
-    <link rel="stylesheet" href="memberonly.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<title>Services Section </title>
+<link rel="stylesheet" type="text/css" href="memberonly.css">
 </head>
 <body>
-    <button id="logoutButton">Logout</button>
-    <div class="container">
-        <div class="card">
-          <div class="face face1">
-            <div class="content">
-               <i class="fab fa-windows"></i>            
-              <h3>About us</h3>
-            </div>
-          </div>
-          <div class="face face2">
-            <div class="content">
-              <p>Go to main page</p>
-              <a href="index.html" type="button">Read More</a>
-            </div>
-          </div>
-       </div>
-       
-       <div class="card">
-          <div class="face face1">
-            <div class="content">               
-            <h3>Items</h3>
-            </div>
-          </div>
-          <div class="face face2">
-            <div class="content">
-              <p>View items and purchase them</p>
-              <a href="items" type="button">Get item</a>
-            </div>
-          </div>
-       </div>
-       
-       
-       <div class="card">
-          <div class="face face1">
-            <div class="content">
-              <i class="fab fa-apple"></i>
-               <h3>view cart</h3>
-            </div>
-          </div>
-          <div class="face face2">
-            <div class="content">
-              <p>View your cart</p>
-              <a href="checkout" type="button">Go to checkout</a>
-            </div>
-          </div>
-       </div>
-     </div>
-
-
-     <h1>Welcome, <span id="username"></span></h1>
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<button id="logoutButton">Logout</button>
+  <h1>Welcome, <span id="username"></span></h1>
+	<div class="container">
+		<div class="box" style="--clr:#89ec5b;">
+			<div class="content">
+				<div class="icon"><ion-icon name="brush"></ion-icon></div>
+				<div class="text">
+					<h3>Main</h3>
+					<p>Welcome to our main homepage</p>
+					<a href="index.html">Go to main page</a>
+				</div>
+			</div>
+		</div>
+		<div class="box" style="--clr:#eb5ae5;">
+			<div class="content">
+				<div class="icon"><ion-icon name="code-slash"></ion-icon></div>
+				<div class="text">
+					<h3>Shopping</h3>
+					<p>Find your items</p>
+					<a href="items">Go to shopping page</a>
+				</div>
+			</div>
+		</div>
+		<div class="box" style="--clr:#5b98eb;">
+			<div class="content">
+				<div class="icon"><ion-icon name="search"></ion-icon></div>
+				<div class="text">
+					<h3>Check out</h3>
+					<p>Check to see what you have added in your cart</p>
+					<a href="checkout">Go to checkout page</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             $.get('/get-username', function(data) {

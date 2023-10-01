@@ -9,11 +9,16 @@ const app = express();
 
 
 const MONGO_DB = process.env.MONGO_DB || '';
-//connect to database
-mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true });
+//connect t0 database
+mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => {
+    console.log('Connected to MongoDB');
+})
+.catch(err => {
+    console.error('Error connecting to MongoDB', err);
+});
 
-// For items (products) to store database
-const ItemSchema = new mongoose.Schema({  
+const ItemSchema = new mongoose.Schema({  //This is for item to store database
     name: String,
     description: String,
     price: Number,  
@@ -24,7 +29,6 @@ const ItemSchema = new mongoose.Schema({
     }
 });
 
-// For User details on database
 const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
@@ -35,25 +39,23 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-//Sending Email
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'tosshix@gmail.com',
-        pass: 'txmmihpzskfidqmy'  
+        user: 'tosshix@gmail.com',  //need to modify this
+        pass: 'txmmihpzskfidqmy'  //need to modify this
     }
 });
-
-const User = mongoose.model('User', UserSchema, 'user');
+const User = mongoose.model('User', UserSchema, 'user'); //specify the path to the user
 const Item = mongoose.model('Item', ItemSchema);
 const session = require('express-session');
-
 
 app.use(express.static('public'));  //make sure to set initial path to public
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Session
+
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
@@ -64,7 +66,6 @@ app.use(session({
     }
 }));
 
-// This endpoint is for login page
 app.get('/memberonly.html', checkLoggedIn, (req, res) => {
     res.sendFile(__dirname + '/public/memberonly.html');
 });
@@ -88,7 +89,6 @@ app.post('/delete/:id', async (req, res) => {
     res.redirect('/items');
 });
 
-// listen method to check if server is running
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
@@ -99,7 +99,6 @@ app.get('/api/items', async (req, res) => {
     res.json(items);
 });
 
-// API route for adding
 app.post('/api/add', async (req, res) => {
     const item = new Item(req.body);
     await item.save();
@@ -154,7 +153,7 @@ app.post('/register', async (req, res) => {
         const verificationToken = jwt.sign({ userId: user._id }, 'YOUR_SECRET_KEY', { expiresIn: '1h' });
 
     // Send verification email
-    const verificationLink = `http://localhost:3000/verify/${verificationToken}`;
+    const verificationLink = `https://nwen304-oj6vlskeja-ts.a.run.app/verify/${verificationToken}`;
     const mailOptions = {
         from: 'YOUR_GMAIL_ADDRESS',
         to: email,
@@ -169,6 +168,7 @@ app.post('/register', async (req, res) => {
             console.log('Email sent: ' + info.response);
         }
     });
+
         res.redirect('/login.html');  
     });
 });
@@ -194,14 +194,16 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
+        console.log('User not found:', username);
         return res.status(400).send('Invalid username or password');
     }
+    
 
     //Compare password 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-        return res.status(400).send('Invalid username or password');
-    }
+    const validPassword = await bcrypt.compare(password, user.password).catch(err => {
+        console.error('Error comparing passwords', err);
+        return false;
+    });
 
     // emailVerified field check
     if (!user.emailVerified) {
@@ -300,5 +302,3 @@ app.get('/cart-status', (req, res) => {
     const cart = getUserCart(user);
     res.json(cart);
 });
-
-
