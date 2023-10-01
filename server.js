@@ -128,16 +128,6 @@ app.post('/register', async (req, res) => {
     console.log(req.body);
     const { username, email, password,confirmPassword} = req.body;
 
-    // Check if email or username already exists
-    const existingUserByEmail = await User.findOne({ email });
-    const existingUserByUsername = await User.findOne({ username });
-
-    if (existingUserByEmail) {
-        return res.status(400).send('This email already exists');
-    }
-    if (existingUserByUsername) {
-        return res.status(400).send('This username already exists');
-    }
     //to see whether it maches
     if (password !== confirmPassword) {
         return res.status(400).send('Passwords do not match');

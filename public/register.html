@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="card">
-        <form action="/register" method="post">
+        <form action="/register" method="post" onsubmit="return validateForm();">
             <div class="content">
                 
                 <!-- <h2>神</h2>  for the additional design -->
@@ -74,27 +74,6 @@
         return true;
     }
     </script>
-    <script>
-        document.querySelector("form").addEventListener("submit", async function(event) {
-            if (!validateForm()) {
-                event.preventDefault();
-                return;  
-            }
     
-            const formData = new FormData(this);
-            const response = await fetch("/register", {
-                method: "POST",
-                body: formData
-            });
-    
-            const feedback = document.getElementById("passwordFeedback");
-            if (response.status === 400) {
-                const errorMessage = await response.text();
-                feedback.textContent = errorMessage;
-            } else {
-                window.location.href = "/login.html";  // Redirect to login page or any other page after successful registration
-            }
-        });
-    </script>
   </body>
 </html>
