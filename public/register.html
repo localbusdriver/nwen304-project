@@ -74,5 +74,24 @@
         return true;
     }
     </script>
+    <script>
+        document.querySelector("form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+    
+            const formData = new FormData(this);
+            const response = await fetch("/register", {
+                method: "POST",
+                body: formData
+            });
+    
+            const feedback = document.getElementById("passwordFeedback");
+            if (response.status === 400) {
+                const errorMessage = await response.text();
+                feedback.textContent = errorMessage;
+            } else {
+                window.location.href = "/login.html";  // Redirect to login page or any other page after successful registration
+            }
+        });
+    </script>
   </body>
 </html>
