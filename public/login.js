@@ -17,14 +17,15 @@ $(document).ready(function () {
         const password = $('input[name="password"]').val();
 
         $.post('/login', { username, password })
+        // Waits for response from server
         .done(function(response) {
             if (response.message === 'Logged in successfully') {
-                if (response.redirectTo) {
-                    window.location.href = response.redirectTo; //Redirect to server provided URL
+                if (response.redirectTo) { // Redirect to server provided URL
+                    window.location.href = response.redirectTo; 
                 } else {
                     alert('Logged in successfully');
                 }
-            } else {
+            } else { // Display error message
                 alert(response.message);
             }
         })

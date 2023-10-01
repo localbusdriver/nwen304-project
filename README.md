@@ -29,7 +29,7 @@ npm install jsonwebtoken
 npm install nodemailer
 
 #Install the express-session module using npm
-npm install express-session
+npm install express-sessione
 
 Steps above are all needed in order to run node server.js else shows you some error
 

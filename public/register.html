@@ -63,7 +63,8 @@
             feedback.textContent = "Passwords do not match, please try again.";
             return false;
         }
-    
+        
+        // Contolling complexity of password
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
         if (!regex.test(password)) {
             feedback.textContent = "Password should have at least 8 characters, one uppercase, one lowercase, and one number.";

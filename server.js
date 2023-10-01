@@ -9,10 +9,11 @@ const app = express();
 
 
 const MONGO_DB = process.env.MONGO_DB || '';
-//connect t0 database
+//connect to database
 mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const ItemSchema = new mongoose.Schema({  //This is for item to store database
+// For items (products) to store database
+const ItemSchema = new mongoose.Schema({  
     name: String,
     description: String,
     price: Number,  
@@ -23,6 +24,7 @@ const ItemSchema = new mongoose.Schema({  //This is for item to store database
     }
 });
 
+// For User details on database
 const UserSchema = new mongoose.Schema({
     username: String,
     email: String,
@@ -33,23 +35,25 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-
+//Sending Email
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'tosshix@gmail.com',  //need to modify this
-        pass: 'txmmihpzskfidqmy'  //need to modify this
+        user: 'tosshix@gmail.com',
+        pass: 'txmmihpzskfidqmy'  
     }
 });
-const User = mongoose.model('User', UserSchema, 'user'); //specify the path to the user
+
+const User = mongoose.model('User', UserSchema, 'user');
 const Item = mongoose.model('Item', ItemSchema);
 const session = require('express-session');
+
 
 app.use(express.static('public'));  //make sure to set initial path to public
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
+// Session
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
@@ -60,6 +64,7 @@ app.use(session({
     }
 }));
 
+// This endpoint is for login page
 app.get('/memberonly.html', checkLoggedIn, (req, res) => {
     res.sendFile(__dirname + '/public/memberonly.html');
 });
@@ -83,6 +88,7 @@ app.post('/delete/:id', async (req, res) => {
     res.redirect('/items');
 });
 
+// listen method to check if server is running
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
@@ -93,6 +99,7 @@ app.get('/api/items', async (req, res) => {
     res.json(items);
 });
 
+// API route for adding
 app.post('/api/add', async (req, res) => {
     const item = new Item(req.body);
     await item.save();
@@ -162,7 +169,6 @@ app.post('/register', async (req, res) => {
             console.log('Email sent: ' + info.response);
         }
     });
-
         res.redirect('/login.html');  
     });
 });
