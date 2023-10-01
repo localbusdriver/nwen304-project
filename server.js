@@ -10,7 +10,13 @@ const app = express();
 
 const MONGO_DB = process.env.MONGO_DB || '';
 //connect t0 database
-mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => {
+    console.log('Connected to MongoDB');
+})
+.catch(err => {
+    console.error('Error connecting to MongoDB', err);
+});
 
 const ItemSchema = new mongoose.Schema({  //This is for item to store database
     name: String,
@@ -188,14 +194,16 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
+        console.log('User not found:', username);
         return res.status(400).send('Invalid username or password');
     }
+    
 
     //Compare password 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-        return res.status(400).send('Invalid username or password');
-    }
+    const validPassword = await bcrypt.compare(password, user.password).catch(err => {
+        console.error('Error comparing passwords', err);
+        return false;
+    });
 
     // emailVerified field check
     if (!user.emailVerified) {
