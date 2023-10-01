@@ -147,7 +147,7 @@ app.post('/register', async (req, res) => {
         const verificationToken = jwt.sign({ userId: user._id }, 'YOUR_SECRET_KEY', { expiresIn: '1h' });
 
     // Send verification email
-    const verificationLink = `http://localhost:3000/verify/${verificationToken}`;
+    const verificationLink = `https://nwen304-oj6vlskeja-ts.a.run.app/verify/${verificationToken}`;
     const mailOptions = {
         from: 'YOUR_GMAIL_ADDRESS',
         to: email,
