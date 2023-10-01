@@ -76,7 +76,10 @@
     </script>
     <script>
         document.querySelector("form").addEventListener("submit", async function(event) {
-            event.preventDefault();
+            if (!validateForm()) {
+                event.preventDefault();
+                return;  
+            }
     
             const formData = new FormData(this);
             const response = await fetch("/register", {
