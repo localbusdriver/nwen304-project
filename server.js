@@ -4,24 +4,22 @@ const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('dotenv').config()
+require('dotenv').config();
 const app = express();
 
-
 const MONGO_DB = process.env.MONGO_DB || '';
-//connect t0 database
 mongoose.connect(MONGO_DB, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch(err => {
-    console.error('Error connecting to MongoDB', err);
-});
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Error connecting to MongoDB', err);
+    });
 
-const ItemSchema = new mongoose.Schema({  //This is for item to store database
+const ItemSchema = new mongoose.Schema({
     name: String,
     description: String,
-    price: Number,  
+    price: Number,
     images: {
         white: String,
         blue: String,
@@ -39,49 +37,74 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'tosshix@gmail.com',  //need to modify this
-        pass: 'txmmihpzskfidqmy'  //need to modify this
+        user: 'tosshix@gmail.com',  
+        pass: 'txmmihpzskfidqmy' 
     }
 });
-//set the checkLoggedin middleware so use can not directly access to memberonly page
-app.get('/memberonly.html', checkLoggedIn, (req, res) => {
-    res.sendFile(__dirname + '/public/memberonly.html');
+
+app.use(express.static('public'));
+
+function checkLoggedIn(req, res, next) {
+    if (req.session && req.session.user && req.session.user.id) {
+        next();
+    } else {
+        res.redirect('/login.html?sessionExpired=true');
+    }
+}
+
+
+app.get('/memberonly.html', (req, res) => {
+    if (req.session && req.session.user && req.session.user.id) {
+        res.sendFile(__dirname + '/public/memberonly.html');
+    } else {
+        res.redirect('/login.html?sessionExpired=true');
+    }
 });
 
-const User = mongoose.model('User', UserSchema, 'user'); //specify the path to the user
+const User = mongoose.model('User', UserSchema, 'user');
 const Item = mongoose.model('Item', ItemSchema);
 const session = require('express-session');
 
-app.use(express.static('public'));  //make sure to set initial path to public
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-
 
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
     saveUninitialized: true,
-    cookie: { 
-        secure: false, 
-        maxAge: 3600000 // 1hour
+    cookie: {
+        secure: false,
+        maxAge: 3600000 // 1 hour
     }
 }));
 
-app.get('/memberonly.html', checkLoggedIn, (req, res) => {
-    res.sendFile(__dirname + '/public/memberonly.html');
+
+
+app.get('/items', async (req, res) => {
+    let query = {};
+    
+    if (req.query.name) {
+        query.name = new RegExp(req.query.name, 'i');
+    }
+
+    if (req.query.minPrice) {
+        query.price = { $gte: Number(req.query.minPrice) };
+    }
+
+    if (req.query.maxPrice) {
+        if (query.price) {
+            query.price.$lte = Number(req.query.maxPrice);
+        } else {
+            query.price = { $lte: Number(req.query.maxPrice) };
+        }
+    }
+
+    const items = await Item.find(query);
+    res.render('index', { items });
 });
-
-app.use(express.static('public'));
-
-// //CRUD 
-// app.get('/items', async (req, res) => {  //Set the endpoint for items
-//     const items = await Item.find();
-//     res.render('index', { items });
-// });
 
 app.post('/add', async (req, res) => {
     const item = new Item(req.body);
@@ -197,6 +220,7 @@ app.post('/login', async (req, res) => {
 
     //look for username
     const user = await User.findOne({ username });
+    
 
     if (!user) {
         console.log('User not found:', username);
@@ -205,10 +229,10 @@ app.post('/login', async (req, res) => {
     
 
     //Compare password 
-    const validPassword = await bcrypt.compare(password, user.password).catch(err => {
-        console.error('Error comparing passwords', err);
-        return false;
-    });
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+        return res.status(400).send('Invalid username or password');
+    }
 
     // emailVerified field check
     if (!user.emailVerified) {
@@ -307,5 +331,8 @@ app.get('/cart-status', (req, res) => {
     const cart = getUserCart(user);
     res.json(cart);
 });
+
+
+
 
 

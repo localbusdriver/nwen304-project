@@ -49,12 +49,4 @@ if (urlParams.get('sessionExpired')) {
     document.getElementById('loginMessage').innerText = 'Your session has expired. Please log in again.';
 }
 
-function checkLoggedIn(req, res, next) {
-    if (req.session && req.session.user && req.session.user.id) {
-        next();
-    } else {
-        res.redirect('/login.html?sessionExpired=true');
-    }
-}
-
 
