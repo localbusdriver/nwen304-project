@@ -57,4 +57,3 @@ function checkLoggedIn(req, res, next) {
     }
 }
 
-

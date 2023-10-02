@@ -7,6 +7,28 @@ const bcrypt = require('bcrypt');
 require('dotenv').config()
 const app = express();
 
+const cors = require('cors');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+
+app.use(
+    cookieSession({
+        name: 'session',
+        keys: ['cyberwolve'],
+        maxAge: 60 * 60 * 1000 //1 hours
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        methods: ['GET', 'POST', 'ADD'],
+        credentials: true,
+    })
+);
 
 const MONGO_DB = process.env.MONGO_DB || '';
 //connect t0 database
@@ -94,8 +116,10 @@ app.post('/delete/:id', async (req, res) => {
     res.redirect('/items');
 });
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log('Server is running on port ${PORT}');
 });
 
 //Create jsonbase restful service
@@ -234,9 +258,6 @@ function checkLoggedIn(req, res, next) {
     }
 }
 
-
-
-
 app.post('/add-to-cart/:id', checkLoggedIn, async (req, res) => {  //This endpont is for adding cart
     const itemId = req.params.id;
 
@@ -309,3 +330,30 @@ app.get('/cart-status', (req, res) => {
 });
 
 
+
+// function googleSignIn(){
+//     useEffect(() => {
+
+//         function handleCredentialResponse(response) {
+//             console.log(response.credential);
+
+//             console.log
+//         }
+        
+//         /* Global Google */
+//         google.accounts.id.initialize({
+//             client_id: 'YOUR_GOOGLE_CLIENT_ID',
+//             callback: handleCredentialResponse
+//         });
+
+//         google.accounts.id.renderButton(
+//             document.getElementById('SignInDiv'), 
+//             { theme: 'outline', size: 'large' }
+//             );
+//         }, []);
+
+//     return(
+//         <div className="GoogleSignIn">
+//         <div id="SignInDiv"></div></div>
+//     )
+// }
