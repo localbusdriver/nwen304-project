@@ -147,10 +147,13 @@ body {
 }
 
 h1 {
-  color: white; 
-  font-size: 3em; 
+  margin-right: -700px;
+  align-content: center;
+  color: white;
+  font-size: 3em;
   text-align: center;
-  margin-top: 800px; 
+  margin-bottom: 750px;
+  padding-left: 250px;
 }
 
 #logoutButton {
