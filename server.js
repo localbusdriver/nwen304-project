@@ -302,3 +302,8 @@ app.get('/cart-status', (req, res) => {
     const cart = getUserCart(user);
     res.json(cart);
 });
+//set the checkLoggedin middleware so use can not directly access to memberonly page
+app.get('/memberonly.html', checkLoggedIn, (req, res) => {
+    res.sendFile(__dirname + '/public/memberonly.html');
+});
+
