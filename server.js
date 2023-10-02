@@ -93,6 +93,29 @@ app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
 
+app.get('/user/:id', async (req, res) => {
+    try {
+        const response = await axios.get(`https://user-service-url/user/${req.params.id}`);
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).send('Error accessing User Service');
+    }
+});
+
+//Route to item
+app.get('/item/:id', async (req, res) => {
+    try {
+        const response = await axios.get(`https://item-service-url/item/${req.params.id}`);
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).send('Error accessing Item Service');
+    }
+});
+
+app.listen(3000, () => {
+    console.log('API Gateway is running on port 3000');
+});
+
 //Create jsonbase restful service
 app.get('/api/items', async (req, res) => {
     const items = await Item.find();
