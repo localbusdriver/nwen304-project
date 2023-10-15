@@ -44,4 +44,15 @@ npx tailwindcss init -p
 
 npm install react-icons
 
-npm install zustand
+npm install -D prisma
+
+npx prisma init
+
+
+npm install next-auth @prisma/client @next-auth/prisma-adapter
+
+
+npm install bcrypt
+
+npm install -D @types/bcrypt
+
