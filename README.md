@@ -36,3 +36,8 @@ Steps above are all needed in order to run node server.js else shows you some er
 #This is for google login and for registering and verifing
 npm install passport passport-google-oauth20 express-session
 
+
+
+npm install -D tailwindcss postcss autoprefixer
+
+npx tailwindcss init -p
