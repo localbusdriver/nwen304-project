@@ -3,6 +3,7 @@ import Navbar from './components/navbar/Navbar'
 import './globals.css'
 import { Nunito } from 'next/font/google'
 import Modal from './components/modals/Modal'
+import RegisterModal from './components/modals/RegisterModal'
 
 
 export const metadata = {
@@ -22,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body>{children}
           <ClientOnly>
-            <Modal title="Login" isOpen />
+            <RegisterModal />
             <Navbar />
           </ClientOnly>
         {children}

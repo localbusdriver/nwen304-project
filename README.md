@@ -56,3 +56,8 @@ npm install bcrypt
 
 npm install -D @types/bcrypt
 
+npm install zustand
+
+npm install axios
+
+npm install react-hook-form
