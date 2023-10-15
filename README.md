@@ -1,4 +1,4 @@
-1.adding database format(manually for items)
+1. adding database format(manually for items)
 
 {
   "name": "",
@@ -17,7 +17,7 @@ Basic instruction to setup server::
 Database setting make sure endpoint is set to 'mongodb://localhost/nwen304'
 
 #How to run the local server
-type: node server.js
+type: npm run dev
 
 #Install the jsonwebtoken module using npm
 npm install jsonwebtoken
