@@ -61,3 +61,5 @@ npm install zustand
 npm install axios
 
 npm install react-hook-form
+
+npm install react-hot-toast
