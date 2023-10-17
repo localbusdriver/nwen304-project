@@ -36,7 +36,20 @@ app.post('/login', userController.postLogin);
 app.post('/logout', userController.postLogout);
 app.get('/member', userController.getMemberPage);
 app.use('/', authRoutes);
-
+app.get('/items', async (req, res) => {
+    try {
+        //if wanna use database ise const items = await Item.find();
+        const items = [
+            { name: "Apple", description: "Description for Item 1", image: "path_to_image1.jpg" },
+            { name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
+           
+        ];
+        res.render('items', { items });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+});
 
 const PORT = 3001;
 app.listen(PORT, () => {
