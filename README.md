@@ -11,3 +11,8 @@ npm install express body-parser express-session
 npm install dotenv
 npm install middleware
 
+npm install axios  //this is for API gateway
+
+
+npm install cors
+
