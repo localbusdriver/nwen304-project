@@ -81,10 +81,6 @@ exports.getMemberPage = (req, res) => {
     res.render('member');
 };
 
-// register route controller
-exports.getRegister = (req, res) => {
-    res.render('register');
-};
 
 exports.postRegister = async (req, res) => {
     try {
