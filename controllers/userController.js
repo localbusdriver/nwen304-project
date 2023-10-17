@@ -19,22 +19,20 @@ exports.postRegister = [
         }
 
         try {
+            const existingUser = await User.findOne({ username: req.body.username });
+            if (existingUser) {
+                return res.status(400).send('Username already exists');
+            }
+
             const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const user = new User({
+            const newUser = new User({
                 username: req.body.username,
                 password: hashedPassword
             });
-            await user.save();
+            await newUser.save();
 
-            // User registered successfully
-            res.send(`
-                <p>User registered successfully!<br>Redirecting to login page in 5 seconds...</p>
-                <script>
-                    setTimeout(function() {
-                        window.location.href = "/login";
-                    }, 5000);
-                </script>
-            `);
+            req.session.user = newUser;
+            res.redirect('/member');
         } catch (error) {
             console.error(error);
             res.status(500).send('Server error');
@@ -82,29 +80,4 @@ exports.getMemberPage = (req, res) => {
 };
 
 
-exports.postRegister = async (req, res) => {
-    try {
-        //Store userinfomation in database
-        const existingUser = await User.findOne({ username: req.body.username });
-        if (existingUser) {
-            // if already existing
-            return res.status(400).send('Username already exists');
-        }
-
-        // store in database as new user
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        const newUser = new User({
-            username: req.body.username,
-            password: hashedPassword
-        });
-        await newUser.save();
-
-        // set the state
-        req.session.user = newUser;
-        res.redirect('/member'); 
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error');
-    }
-};
 

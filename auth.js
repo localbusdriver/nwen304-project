@@ -59,12 +59,12 @@ passport.serializeUser((user, done) => {
     done(null, user.id); //store userin in session
 });
 passport.deserializeUser((id, done) => {
-    User.findById(id)
+    User.findOne({ googleId: id })
         .then(user => {
             if (!user) {
                 return done(null, false); // if no user exist
             }
-            done(null, user); // recover user infomation
+            done(null, user); // recover user information
         })
         .catch(err => {
             done(err, null);
