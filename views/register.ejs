@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <form action="/register" method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" id="password" name="password" placeholder="Password" required oninput="checkPasswordComplexity()">
+        <div id="passwordFeedback"></div>
+        <button type="submit">Register</button>
+    </form>
+    <a href="/auth/google" style="display: inline-block; margin-top: 10px; padding: 10px; background-color: #4285f4; color: white; text-decoration: none;">Register with Google</a>
+    <script>
+        function checkPasswordComplexity() {
+            const password = document.getElementById('password').value;
+            const feedback = document.getElementById('passwordFeedback');
+            
+            if (password.length < 8) {
+                feedback.textContent = 'Password must be at least 8 characters long.';
+                return;
+            }
+            if (!/[a-z]/.test(password)) {
+                feedback.textContent = 'Password must contain at least one lowercase character.';
+                return;
+            }
+            if (!/[A-Z]/.test(password)) {
+                feedback.textContent = 'Password must contain at least one uppercase character.';
+                return;
+            }
+            if (!/[0-9]/.test(password)) {
+                feedback.textContent = 'Password must contain at least one number.';
+                return;
+            }
+            
+            feedback.textContent = 'Password looks good!';
+        }
+    </script>
+</body>
+</html>
