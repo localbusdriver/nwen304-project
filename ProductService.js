@@ -1,6 +1,5 @@
 const express = require('express');
 
-
 let items = [
     { id: 1, name: "Apple", description: "Description for Item 1", image: "path_to_image1.jpg" },
     { id: 2, name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
@@ -8,11 +7,9 @@ let items = [
 
 const app = express();
 
-
 app.get('/items', (req, res) => {
     res.json(items);
 });
-
 
 app.get('/item/:itemId', (req, res) => {
     const item = items.find(i => i.id === parseInt(req.params.itemId));
@@ -21,7 +18,6 @@ app.get('/item/:itemId', (req, res) => {
     }
     res.json(item);
 });
-
 
 app.put('/item/:itemId', (req, res) => {
     const item = items.find(i => i.id === parseInt(req.params.itemId));
@@ -35,7 +31,6 @@ app.put('/item/:itemId', (req, res) => {
 
     res.json(item);
 });
-
 
 app.delete('/item/:itemId', (req, res) => {
     const itemIndex = items.findIndex(i => i.id === parseInt(req.params.itemId));
