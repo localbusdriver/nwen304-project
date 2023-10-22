@@ -5,7 +5,8 @@ const userController = require('./controllers/userController');
 const mongoose = require('mongoose');
 const authRoutes = require('./auth'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
-
+const Item = require('./models/Item');
+const User = require('./models/User');
 
 //if wanna use database ise const items = await Item.find();
 let items = [
@@ -13,11 +14,19 @@ let items = [
     { id: 2, name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
 ];
 
+const MONGO_URL = process.env.MONGO_DB || '';
 
-mongoose.connect('mongodb://localhost:27017/userinfo', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect(MONGO_URL, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Error connecting to MongoDB', err);
+    }
+);
 
 const app = express();
 
