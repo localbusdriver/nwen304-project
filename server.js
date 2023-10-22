@@ -5,8 +5,11 @@ const userController = require('./controllers/userController');
 const mongoose = require('mongoose');
 const authRoutes = require('./auth'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
+
+const path = require('path');
 const Item = require('./models/Item');
 const User = require('./models/User');
+
 
 //if wanna use database ise const items = await Item.find();
 let items = [
@@ -40,6 +43,8 @@ app.use(session({
 }));
 
 app.set('view engine', 'ejs');
+app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, 'views', 'users'), path.join(__dirname, 'views', 'products')]);
+//original app.set('views', path.join(__dirname, 'views'));
 
 app.get('/register', userController.getRegister);
 app.post('/register', userController.postRegister);
@@ -53,6 +58,17 @@ app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.post('/logout', userController.postLogout);
 app.get('/member', userController.getMemberPage);
+//Display password reset page
+app.get('/reset-password', userController.getResetPassword);
+
+//Process password reset request
+app.post('/reset-password', userController.postResetPassword);
+
+//Use token to display password set page
+app.get('/reset/:token', userController.getNewPassword);
+
+//set the new password
+app.post('/new-password', userController.postNewPassword);
 app.use('/', authRoutes);
 app.get('/items', async (req, res) => {
     try {
