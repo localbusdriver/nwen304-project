@@ -90,23 +90,36 @@
 </body>
 <script>
 
-async function fetchWeather() {
-    const apiKey = '370ec73325035f836a6cdbcc22ec3181';
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`);
-    const data = await response.json();
-    document.getElementById('weather').innerText = `Tokyo: ${data.main.temp}°C`;
-}
+    async function fetchWeather() {
+        try{
+            const response = await fetch('/weather');
+            const data = await response.json();
+            const temperature = data.main.temp;
+            document.getElementById('weather').textContent = '${temperature}°C';
+        }
+        catch(error){
+            console.error('Failed to fetch weather data', error);
+        }
+    }
 
-async function fetchNews() {
-    const apiKey = 'ec7fa3239492418fb269d22f9f96ef59';
-    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`);
-    const data = await response.json();
-    const headlines = data.articles.map(article => `<li>${article.title}</li>`).join('');
-    document.getElementById('news').innerHTML = headlines;
-}
+    async function fetchNews() {
+        try {
+        const response = await fetch('/news'); // This URL corresponds to your API gateway
+        const data = await response.json();
+        const newsList = document.getElementById('news');
+        const headlines = data.articles.map(article => {
+            const listItem = document.createElement('li');
+            listItem.textContent = article.title;
+            return listItem;
+        });
+        headlines.forEach(headline => newsList.appendChild(headline));
+    } catch (error) {
+        console.error('Failed to fetch news data', error);
+    }
+    }
 
-window.onload = function() {
-    fetchWeather();
-    fetchNews();
-}
+    window.onload = function() {
+        fetchWeather();
+        fetchNews();
+    }
 </script>
