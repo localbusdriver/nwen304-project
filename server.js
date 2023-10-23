@@ -6,16 +6,29 @@ const mongoose = require('mongoose');
 const authRoutes = require('./auth'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
 const path = require('path');
+const Item = require('./models/Item');
+const User = require('./models/User');
 
+
+//if wanna use database ise const items = await Item.find();
 let items = [
     { id: 1, name: "Apple", description: "Description for Item 1", image: "path_to_image1.jpg" },
     { id: 2, name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
 ];
 
-mongoose.connect('mongodb://localhost:27017/userinfo', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const MONGO_URL = process.env.MONGO_DB || '';
+
+mongoose.connect(MONGO_URL, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Error connecting to MongoDB', err);
+    }
+);
 
 const app = express();
 
@@ -109,7 +122,7 @@ app.post('/item', ensureAuthenticated, (req, res) => {
     res.json(newItem);
 });
 
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
