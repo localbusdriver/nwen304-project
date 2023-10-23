@@ -59,7 +59,7 @@ npm install -g artillery
 
 2.Run tests using .yml:
 
-artillery run config.yml (any yml)
+artillery run test/config.yml (any yml)
 
 🧪 Unit Testing
 1.Install the required libraries for testing:
