@@ -17,6 +17,7 @@ passport.use(new GoogleStrategy({
 (accessToken, refreshToken, profile, done) => {
     return done(null, profile);
 }));
+
 router.use(passport.initialize());
 router.use(passport.session());
 //Set the route
@@ -70,10 +71,5 @@ passport.deserializeUser((id, done) => {
             done(err, null);
         });
 });
-
-
-
-
-
 
 module.exports = router;
