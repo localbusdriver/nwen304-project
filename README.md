@@ -23,3 +23,7 @@ npm install node-fetch
 1.For the performance test
 npm install -g artillery
 artillery run config.yml
+
+npm install mocha chai chai-http --save-dev
+
+npx mocha test/authMiddleware.test.js

@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const authRoutes = require('./auth');
 const User = require('./models/User'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
-const path = require('path');
+const path = require('path');const morgan = require('morgan');
+
 require('dotenv').config();
 let fetch;
 
@@ -48,11 +49,17 @@ mongoose.connect(MONGO_URL, {
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// const PORT = process.env.PORT || 3000;
 
+// const server = app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
+
+// Named exports
+module.exports = {
+    app: app,
+    // server: server
+};
 // Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -204,6 +211,9 @@ app.get('/recommended-items', ensureAuthenticated, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+app.use(morgan('tiny'));
+
 
 
 
