@@ -9,6 +9,7 @@ const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
 const path = require('path');const morgan = require('morgan');
 const cors = require('cors');
 
+
 require('dotenv').config();
 let fetch;
 
@@ -21,17 +22,18 @@ require('dotenv').config()
 
 //if wanna use database ise const items = await Item.find();
 let items = [
-    { id: 1, name: "Apple", description: "Crisp and sweet fruit", image: "path_to_image1.jpg", genre: "Fruit" },
-    { id: 2, name: "Orange", description: "Citrus fruit rich in vitamin C", image: "path_to_image2.jpg", genre: "Fruit" },
-    { id: 3, name: "Umbrella", description: "Stay dry during rainy days", image: "path_to_umbrella.jpg", genre: "Accessory" },
-    { id: 4, name: "Banana", description: "Delicious tropical fruit", image: "path_to_banana.jpg", genre: "Fruit" },
-    { id: 5, name: "Hat", description: "Protects from sun", image: "path_to_hat.jpg", genre: "Accessory" },
-    { id: 6, name: "Grapes", description: "Small and sweet fruit", image: "path_to_grapes.jpg", genre: "Fruit" },
-    { id: 7, name: "Sunglasses", description: "Protects eyes from UV rays", image: "path_to_sunglasses.jpg", genre: "Accessory" },
-    { id: 8, name: "Strawberry", description: "Red and juicy fruit", image: "path_to_strawberry.jpg", genre: "Fruit" },
-    { id: 9, name: "Belt", description: "Holds up your pants", image: "path_to_belt.jpg", genre: "Accessory" },
-    { id: 10, name: "Pineapple", description: "Tropical fruit with a spiky exterior", image: "path_to_pineapple.jpg", genre: "Fruit" }
+    { id: 1, name: "Apple", description: "Crisp and sweet fruit", image: "/image/path_to_image1.jpg", genre: "Fruit" },
+    { id: 2, name: "Orange", description: "Citrus fruit rich in vitamin C", image: "image/path_to_image2.jpg", genre: "Fruit" },
+    { id: 3, name: "Umbrella", description: "Stay dry during rainy days", image: "image/path_to_umbrella.jpg", genre: "Accessory" },
+    { id: 4, name: "Banana", description: "Delicious tropical fruit", image: "image/path_to_banana.jpg", genre: "Fruit" },
+    { id: 5, name: "Hat", description: "Protects from sun", image: "image/path_to_hat.jpg", genre: "Accessory" },
+    { id: 6, name: "Grapes", description: "Small and sweet fruit", image: "image/path_to_grapes.jpg", genre: "Fruit" },
+    { id: 7, name: "Sunglasses", description: "Protects eyes from UV rays", image: "image/path_to_sunglasses.jpg", genre: "Accessory" },
+    { id: 8, name: "Strawberry", description: "Red and juicy fruit", image: "image/path_to_strawberry.jpg", genre: "Fruit" },
+    { id: 9, name: "Belt", description: "Holds up your pants", image: "image/path_to_belt.jpg", genre: "Accessory" },
+    { id: 10, name: "Pineapple", description: "Tropical fruit with a spiky exterior", image: "image/path_to_pineapple.jpg", genre: "Fruit" }
 ];
+
 
 const MONGO_URL = process.env.MONGO_DB || '';
 
@@ -48,8 +50,13 @@ mongoose.connect(MONGO_URL, {
 );
 
 const app = express();
+app.use(cors());
 
-app.use(cors())
+// const PORT = process.env.PORT || 3000;
+
+// const server = app.listen(PORT, () => {
+//     console.log(`Server is running on port ${PORT}`);
+// });
 
 // Named exports
 module.exports = {
@@ -94,6 +101,9 @@ app.get('/reset/:token', userController.getNewPassword);
 app.post('/new-password', userController.postNewPassword);
 
 app.use('/', authRoutes);
+
+
+
 
 app.get('/items', async (req, res) => {
     try {
@@ -161,7 +171,6 @@ app.post('/purchase/:itemId', ensureAuthenticated, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-// ... [前のコードは変更なし]
 
 function countPurchases(purchaseHistory) {
     const genreCounts = {};
@@ -209,14 +218,14 @@ app.get('/recommended-items', ensureAuthenticated, async (req, res) => {
 });
 
 app.get('/api/weather', async (req, res) => {
-    const apiKey = process.env.WEATHER_API_KEY;
+    const apiKey = '370ec73325035f836a6cdbcc22ec3181';
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`);
     const data = await response.json();
     res.json({ temp: data.main.temp });
 });
 
 app.get('/api/news', async (req, res) => {
-    const apiKey = process.env.NEWS_API_KEY;
+    const apiKey = 'ec7fa3239492418fb269d22f9f96ef59';
     const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`);
     const data = await response.json();
     res.json(data.articles);
@@ -224,8 +233,5 @@ app.get('/api/news', async (req, res) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use(morgan('tiny'));
-
-
-
-

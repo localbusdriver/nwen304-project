@@ -49,7 +49,6 @@
             margin-right: 8px;
         }
 
-        /* 新しいスタイル */
         .card {
             background-color: white;
             margin: 20px;
@@ -89,6 +88,7 @@
     <p>Enjoy browsing our website!</p>
 </body>
 <script>
+
     async function fetchWeather() {
         const response = await fetch('/api/weather');
         const data = await response.json();
