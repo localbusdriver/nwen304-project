@@ -17,6 +17,11 @@ let items = [
     { id: 2, name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
 ];
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
 const MONGO_URL = process.env.MONGO_DB || '';
 
 mongoose.connect(MONGO_URL, { 
@@ -123,7 +128,4 @@ app.post('/item', ensureAuthenticated, (req, res) => {
     res.json(newItem);
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+
