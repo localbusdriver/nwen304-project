@@ -2,6 +2,10 @@
   "name": "group-project",
   "version": "1.0.0",
   "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main":"start.js",
+  "scripts": {
+    "start": "node start.js"
+  },
   "dependencies": {
     "all": "^0.0.0",
     "axios": "^1.5.1",
@@ -15,9 +19,15 @@
     "express-validator": "^7.0.1",
     "middleware": "^1.0.0",
     "mongoose": "^7.6.2",
+    "morgan": "^1.10.0",
     "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.7",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.2.0"
   }
 }
