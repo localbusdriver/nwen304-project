@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,8 +48,28 @@
         .navbar .icon {
             margin-right: 8px;
         }
+
+        /* 新しいスタイル */
+        .card {
+            background-color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #news li {
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <a href="/"><i class="fas fa-home icon"></i>Home</a>
@@ -56,7 +77,50 @@
         <a href="/login"><i class="fas fa-sign-in-alt icon"></i>Login</a>
         <a href="/register"><i class="fas fa-user-plus icon"></i>Register</a>
     </div>
+    <div class="card" id="weather-section">
+        <h3 class="section-title">Weather</h3>
+        <div id="weather"></div>
+    </div>
+    <div class="card" id="news-section">
+        <h3 class="section-title">Top News</h3>
+        <ul id="news"></ul>
+    </div>
     <h2>Welcome to our Page!</h2>
     <p>Enjoy browsing our website!</p>
 </body>
-</html>
+<script>
+
+    async function fetchWeather() {
+        try{
+            const response = await fetch('/weather');
+            const data = await response.json();
+            const temperature = data.main.temp;
+            document.getElementById('weather').textContent = `${temperature}°C`;
+        }
+        catch(error){
+            console.error('Failed to fetch weather data', error);
+        }
+    }
+
+    async function fetchNews() {
+        try {
+            const response = await fetch('/news'); // This URL corresponds to your API gateway
+            const data = await response.json();
+            const newsList = document.getElementById('news');
+            const headlines = data.articles.map(article => {
+                const listItem = document.createElement('li');
+                listItem.textContent = article.title;
+                return listItem;
+            });
+            headlines.forEach(headline => newsList.appendChild(headline));
+        } 
+        catch (error) {
+            console.error('Failed to fetch news data', error);
+        }
+    }
+
+    window.onload = function() {
+        fetchWeather();
+        fetchNews();
+    }
+</script>
