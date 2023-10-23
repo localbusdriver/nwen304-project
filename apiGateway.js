@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 const axios = require('axios');
 
-const weatherServiceUrl = 'https://api.openweathermap.org/data/2.5/weather';
-const newsServiceUrl = 'https://newsapi.org/v2/top-headlines';
+const weatherApiKey = '370ec73325035f836a6cdbcc22ec3181';
+const newsApiKey = 'ec7fa3239492418fb269d22f9f96ef59';
 
-const weatherApiKey = 'YOUR_OPENWEATHERMAP_API_KEY';
-const newsApiKey = 'YOUR_NEWS_API_API_KEY';
+const weatherServiceUrl = `https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`;
+const newsServiceUrl = `https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`;
 
 // Middleware to parse JSON requests
 app.use(express.json());
