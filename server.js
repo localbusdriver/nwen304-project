@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
@@ -7,9 +6,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./auth'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
 const path = require('path');
-const Item = require('./models/Item');
-const User = require('./models/User');
-
+require('dotenv').config()
 
 //if wanna use database ise const items = await Item.find();
 let items = [
@@ -49,7 +46,7 @@ app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, 'views', '
 app.get('/register', userController.getRegister);
 app.post('/register', userController.postRegister);
 app.get('/', (req, res) => {
-    res.send('Welcome to our Page!');
+    res.render('home');  //to home.ejs
 });
 
 app.get('/login', userController.getLogin);

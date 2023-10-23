@@ -114,7 +114,7 @@ exports.postResetPassword = (req, res) => {
                 subject: 'Password Reset',
                 html: `
                     <p>You requested a password reset</p>
-                    <p>Click this <a href="http://localhost:3001/reset/${token}">link</a> to set a new password.</p>
+                    <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
                 `
             });
             res.redirect('/login');
