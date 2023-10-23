@@ -5,7 +5,9 @@ const UserSchema = new mongoose.Schema({
     email: String, 
     password: String,
     resetToken: String,
-    resetTokenExpiration: Date
+    resetTokenExpiration: Date,
+    location: String,   //for recommendation
+    purchaseHistory: [String]
 });
 
 const User = mongoose.model('User', UserSchema);

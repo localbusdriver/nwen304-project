@@ -6,46 +6,77 @@
     <title>Member Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6A82FB, #FC5C7D);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: fadeIn 1s;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            animation: fadeIn 1.5s;
+        }
+        .logout-button, .items-link {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            margin: 10px 0;
+        }
         .logout-button {
-            padding: 10px 15px;
             background-color: red;
             color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            animation: fadeIn 2s;
         }
         .logout-button:hover {
             background-color: darkred;
         }
         .items-link {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-            color: #007BFF;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 10px;
-            border: 2px solid transparent;
-            border-radius: 5px;
-            transition: border-color 0.3s, background-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            animation: fadeIn 2.5s;
         }
         .items-link:hover {
-            text-decoration: none;
-            border-color: #007BFF;
-            background-color: rgba(0, 123, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.3);
         }
         .items-link i {
             margin-right: 10px;
-            font-size: 20px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
     <h2>Welcome to the Member Page!</h2>
     <p>This is a protected page for members only.</p>
-    <a href="/items" class="items-link"><i class="fas fa-box-open"></i> Click here to view your original items</a>
-    <form action="/logout" method="post" style="margin-top: 20px;">
+    <a href="/recommended-items" class="items-link"><i class="fas fa-box-open"></i> View our special items</a>
+    <form action="/logout" method="post">
         <button class="logout-button" type="submit">Logout</button>
     </form>
 </body>

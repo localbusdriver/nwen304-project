@@ -5,8 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Items</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        
+        .card:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s;
+        }
+    </style>
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">MyStore</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/member">Member</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container mt-5">
         <div class="row">
             <% items.forEach(item => { %>
@@ -16,17 +39,40 @@
                         <div class="card-body">
                             <h5 class="card-title"><%= item.name %></h5>
                             <p class="card-text"><%= item.description %></p>
-                            <button class="btn btn-primary" onclick="handleGet('<%= item.id %>')">GET</button>
-                            <button class="btn btn-warning" onclick="handlePut('<%= item.id %>')">PUT</button>
-                            <button class="btn btn-danger" onclick="handleDelete('<%= item.id %>')">DELETE</button>
+                            <button class="btn btn-primary" onclick="handleGet('<%= item.id %>')"><i class="fas fa-eye"></i> GET</button>
+                            <button class="btn btn-warning" onclick="handlePut('<%= item.id %>')"><i class="fas fa-edit"></i> PUT</button>
+                            <button class="btn btn-danger" onclick="handleDelete('<%= item.id %>')"><i class="fas fa-trash"></i> DELETE</button>
+                            <button class="btn btn-success" onclick="handlePurchase('<%= item.id %>')"><i class="fas fa-shopping-cart"></i> Purchase</button>
                         </div>
                     </div>
                 </div>
             <% }) %>
         </div>
     </div>
-</body>
-</html>
+    <% if (recommendedItems && recommendedItems.length > 0) { %>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="mb-4">Recommended for You</h2>
+                </div>
+                <% recommendedItems.forEach(item => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="<%= item.image %>" class="card-img-top" alt="<%= item.name %>">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= item.name %></h5>
+                                <p class="card-text"><%= item.description %></p>
+                                <button class="btn btn-primary" onclick="handleGet('<%= item.id %>')"><i class="fas fa-eye"></i> GET</button>
+                                <button class="btn btn-success" onclick="handlePurchase('<%= item.id %>')"><i class="fas fa-shopping-cart"></i> Purchase</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    <% } %>
+    
+
 <script>
     function handleGet(itemId) {
         fetch(`/item/${itemId}`)
@@ -82,5 +128,19 @@
         }
         return response.json();
     }
+
+    function handlePurchase(itemId) {
+        fetch(`/purchase/${itemId}`, {
+            method: 'POST'
+        })
+        .then(handleResponse)
+        .then(data => {
+            if (data && data.msg) {
+                alert("Item purchased!");
+                location.reload();
+            }
+        });
+    }
+    
     
 </script>    
