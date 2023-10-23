@@ -81,3 +81,27 @@
     </form>
 </body>
 </html>
+
+<script>
+    let timeout;
+
+    function resetTimer() {
+        clearTimeout(timeout);
+        timeout = setTimeout(logout, 30000); // 30秒後にlogout関数を実行
+    }
+
+    function logout() {
+        //session logout if user is not acdtive for 10 seconds
+        fetch('/logout', {
+            method: 'POST'
+        }).then(() => {
+            alert('Session timed out due to inactivity.');
+            window.location.href = '/login'; 
+        });
+    }
+
+    //Obeserve user activity
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+</script>

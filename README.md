@@ -20,4 +20,6 @@ npm install nodemailer
 
 npm install node-fetch
 
-
+1.For the performance test
+npm install -g artillery
+artillery run config.yml
