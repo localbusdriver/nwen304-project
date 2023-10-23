@@ -7,6 +7,7 @@ const authRoutes = require('./auth');
 const User = require('./models/User'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
 const path = require('path');
+require('dotenv').config();
 let fetch;
 
 // Immediately Invoked Function Expression (IIFE) to load fetch
