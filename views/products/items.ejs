@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <% items.forEach(item => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="<%= item.image %>" class="card-img-top" alt="<%= item.name %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= item.name %></h5>
+                            <p class="card-text"><%= item.description %></p>
+                            <button class="btn btn-primary" onclick="handleGet('<%= item.id %>')">GET</button>
+                            <button class="btn btn-warning" onclick="handlePut('<%= item.id %>')">PUT</button>
+                            <button class="btn btn-danger" onclick="handleDelete('<%= item.id %>')">DELETE</button>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    function handleGet(itemId) {
+        fetch(`/item/${itemId}`)
+            .then(response => response.json())
+            .then(data => {
+                alert(JSON.stringify(data));
+            });
+    }
+
+    function handlePut(itemId) {
+        const updatedData = {
+            name: prompt("Enter new name:"),
+            description: prompt("Enter new description:"),
+            image: prompt("Enter new image path:")
+        };
+        fetch(`/item/${itemId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedData)
+        })
+        .then(handleResponse)
+        .then(data => {
+            if (data && data.name) {
+                alert("Item updated!");
+                location.reload();
+            }
+        });
+    }
+    
+    function handleDelete(itemId) {
+        if (confirm("Are you sure you want to delete this item?")) {
+            fetch(`/item/${itemId}`, {
+                method: 'DELETE'
+            })
+            .then(handleResponse)
+            .then(data => {
+                if (data && data.msg) {
+                    alert("Item deleted!");
+                    location.reload();
+                }
+            });
+        }
+    }
+    
+    function handleResponse(response) {
+        if (response.status === 401) {
+            return response.text().then(message => {
+                alert(message);
+                throw new Error(message);
+            });
+        }
+        return response.json();
+    }
+    
+</script>    

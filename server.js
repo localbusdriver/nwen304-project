@@ -5,14 +5,12 @@ const userController = require('./controllers/userController');
 const mongoose = require('mongoose');
 const authRoutes = require('./auth'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
+const path = require('path');
 
-
-//if wanna use database ise const items = await Item.find();
 let items = [
     { id: 1, name: "Apple", description: "Description for Item 1", image: "path_to_image1.jpg" },
     { id: 2, name: "Orange", description: "Description for Item 2", image: "path_to_image2.jpg" },
 ];
-
 
 mongoose.connect('mongodb://localhost:27017/userinfo', {
     useNewUrlParser: true,
@@ -21,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/userinfo', {
 
 const app = express();
 
-// Middle ware
+// Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
@@ -31,6 +29,8 @@ app.use(session({
 }));
 
 app.set('view engine', 'ejs');
+app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, 'views', 'users'), path.join(__dirname, 'views', 'products')]);
+//original app.set('views', path.join(__dirname, 'views'));
 
 app.get('/register', userController.getRegister);
 app.post('/register', userController.postRegister);
@@ -38,13 +38,26 @@ app.get('/', (req, res) => {
     res.send('Welcome to our Page!');
 });
 
-console.log("getLogin:", userController.getLogin);
-
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.post('/logout', userController.postLogout);
 app.get('/member', userController.getMemberPage);
+//Display password reset page
+app.get('/reset-password', userController.getResetPassword);
+
+//Process password reset request
+app.post('/reset-password', userController.postResetPassword);
+
+//Use token to display password set page
+app.get('/reset/:token', userController.getNewPassword);
+
+//set the new password
+app.post('/new-password', userController.postNewPassword);
 app.use('/', authRoutes);
+
+
+
+
 app.get('/items', async (req, res) => {
     try {
         res.render('items', { items });
@@ -53,6 +66,7 @@ app.get('/items', async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
 app.get('/item/:itemId', (req, res) => {
     const item = items.find(i => i.id === parseInt(req.params.itemId));
     if (!item) {
@@ -60,6 +74,7 @@ app.get('/item/:itemId', (req, res) => {
     }
     res.json(item);
 });
+
 app.put('/item/:itemId', ensureAuthenticated, (req, res) => {
     const item = items.find(i => i.id === parseInt(req.params.itemId));
     if (!item) {
@@ -94,13 +109,7 @@ app.post('/item', ensureAuthenticated, (req, res) => {
     res.json(newItem);
 });
 
-
-
-
-
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-

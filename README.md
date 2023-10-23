@@ -16,3 +16,5 @@ npm install axios  //this is for API gateway
 
 npm install cors
 
+npm install nodemailer
+
