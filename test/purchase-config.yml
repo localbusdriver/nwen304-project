@@ -1,5 +1,5 @@
 config:
-  target: 'http://localhost:3000'
+  target: 'https://nwen304-project-oj6vlskeja-ts.a.run.app/'
   phases:
     - duration: 60
       arrivalRate: 5
@@ -7,4 +7,4 @@ config:
 scenarios:
   - flow:
     - get:
-        url: /purchase/:itemId'
+        url: '/purchase/:itemId'
