@@ -66,7 +66,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 3600000, // 1 hour
+        secure: true,  //only on http
+        httpOnly: true  // block access from javascript
+    }
 }));
 
 app.set('view engine', 'ejs');
