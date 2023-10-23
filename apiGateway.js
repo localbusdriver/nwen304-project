@@ -36,7 +36,7 @@ app.use('/users', (req, res) => {
     });
 });
 
-const PORT = 3001;
-app.listen(PORT, () => {
-    console.log(`API Gateway is running on port ${PORT}`);
-});
+// const PORT = 3001;
+// app.listen(PORT, () => {
+//     console.log(`API Gateway is running on port ${PORT}`);
+// });

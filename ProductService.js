@@ -53,7 +53,7 @@ app.post('/item', (req, res) => {
     res.json(newItem);
 });
 
-const PORT = 3003;
-app.listen(PORT, () => {
-    console.log(`ProductService is running on port ${PORT}`);
-});
+// const PORT = 3003;
+// app.listen(PORT, () => {
+//     console.log(`ProductService is running on port ${PORT}`);
+// });

@@ -60,7 +60,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-const PORT = 3005;
-app.listen(PORT, () => {
-    console.log(`UserService is running on port ${PORT}`);
-});
+// const PORT = 3005;
+// app.listen(PORT, () => {
+//     console.log(`UserService is running on port ${PORT}`);
+// });
