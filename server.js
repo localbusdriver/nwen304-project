@@ -49,7 +49,7 @@ mongoose.connect(MONGO_URL, {
 
 const app = express();
 
-app.require(cors())
+app.use(cors())
 
 // Named exports
 module.exports = {
