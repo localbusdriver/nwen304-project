@@ -155,3 +155,8 @@ exports.postNewPassword = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+exports.getPrivacyPolicy = (req, res) => {
+    res.render('privacy-policy');
+};
+

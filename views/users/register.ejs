@@ -66,6 +66,9 @@
         .google-btn i {
             margin-right: 5px;
         }
+        #privacyConsent {
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -79,11 +82,15 @@
         <% } %>
         <input type="text" name="username" placeholder="Username" required>
         <input type="email" name="email" placeholder="Email" required>
+        <small>We'll never share your email with anyone else and will only use it for account-related notifications.</small>
         <input type="password" id="password" name="password" placeholder="Password" required oninput="checkPasswordComplexity()">
         <div id="passwordFeedback"></div>
+        <input type="checkbox" id="privacyConsent" name="privacyConsent" required>
+        <label for="privacyConsent">I agree to the <a href="/privacy-policy">Privacy Policy</a></label>
         <button type="submit"><i class="fas fa-user-plus"></i> Register</button>
     </form>
     <a href="/auth/google" class="google-btn"><i class="fab fa-google"></i> Register with Google</a>
+    
     <script>
         function checkPasswordComplexity() {
             const password = document.getElementById('password').value;

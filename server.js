@@ -75,6 +75,8 @@ app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, 'views', '
 
 app.get('/register', userController.getRegister);
 app.post('/register', userController.postRegister);
+app.get('/privacy-policy', userController.getPrivacyPolicy);
+
 app.get('/', (req, res) => {
     res.render('home');  //to home.ejs
 });
@@ -94,6 +96,7 @@ app.get('/reset/:token', userController.getNewPassword);
 
 //set the new password
 app.post('/new-password', userController.postNewPassword);
+
 app.use('/', authRoutes);
 
 
@@ -211,6 +214,8 @@ app.get('/recommended-items', ensureAuthenticated, async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
+
 
 app.use(morgan('tiny'));
 
