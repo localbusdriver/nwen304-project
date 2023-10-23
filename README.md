@@ -1,5 +1,30 @@
 🌐 Nwen304 Project
 
+This is URL for the application
+https://nwen304-project-oj6vlskeja-ts.a.run.app/
+
+🌍 List of Exposed API
+User Registration: /register (GET, POST)
+User Login: /login (GET, POST)
+User Logout: /logout (POST)
+Member Page: /member (GET)
+Reset Password: /reset-password (GET, POST)
+Set New Password: /new-password (POST)
+List Items: /items (GET)
+Specific Item Details: /item/:itemId (GET)
+Update Specific Item: /item/:itemId (PUT)
+Delete Specific Item: /item/:itemId (DELETE)
+Add New Item: /item (POST)
+Purchase Specific Item: /purchase/:itemId (POST)
+Recommended Items: /recommended-items (GET)
+
+🛡️ Fault Tolerance/Error Handling Features
+Middleware for Authentication: The ensureAuthenticated middleware ensures that only authenticated users can access certain routes.
+Error Handling: In the API routes, errors are caught and logged using console.error, and a 500 Server error response is sent to the client.
+Validation: User input is validated before processing to ensure data integrity.
+Logging: Using morgan, the application logs all incoming requests, which can be useful for debugging and monitoring.
+
+
 🚀 Project Setup
 📦 Installing Required Libraries
 Run the following commands to install the necessary libraries for the project:
