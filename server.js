@@ -7,6 +7,7 @@ const authRoutes = require('./auth');
 const User = require('./models/User'); 
 const ensureAuthenticated = require('./middlewares/ensureAuthenticated.js');
 const path = require('path');const morgan = require('morgan');
+const cors = require('cors');
 
 require('dotenv').config();
 let fetch;
@@ -32,7 +33,6 @@ let items = [
     { id: 10, name: "Pineapple", description: "Tropical fruit with a spiky exterior", image: "path_to_pineapple.jpg", genre: "Fruit" }
 ];
 
-
 const MONGO_URL = process.env.MONGO_DB || '';
 
 mongoose.connect(MONGO_URL, { 
@@ -49,6 +49,7 @@ mongoose.connect(MONGO_URL, {
 
 const app = express();
 
+app.require(cors())
 // const PORT = process.env.PORT || 3000;
 
 // const server = app.listen(PORT, () => {
@@ -98,9 +99,6 @@ app.get('/reset/:token', userController.getNewPassword);
 app.post('/new-password', userController.postNewPassword);
 
 app.use('/', authRoutes);
-
-
-
 
 app.get('/items', async (req, res) => {
     try {
@@ -215,7 +213,21 @@ app.get('/recommended-items', ensureAuthenticated, async (req, res) => {
     }
 });
 
+app.get('/api/weather', async (req, res) => {
+    const apiKey = '370ec73325035f836a6cdbcc22ec3181';
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`);
+    const data = await response.json();
+    res.json({ temp: data.main.temp });
+});
 
+app.get('/api/news', async (req, res) => {
+    const apiKey = 'ec7fa3239492418fb269d22f9f96ef59';
+    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`);
+    const data = await response.json();
+    res.json(data.articles);
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(morgan('tiny'));
 
