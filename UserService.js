@@ -8,10 +8,19 @@ const path = require('path');
 const userController = require('./controllers/userController');
 const authRoutes = require('./auth');
 
-mongoose.connect('mongodb://localhost:27017/userinfo', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const MONGO_URL = process.env.MONGO_DB || '';
+
+mongoose.connect(MONGO_URL, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Error connecting to MongoDB', err);
+    }
+);
 
 const app = express();
 
