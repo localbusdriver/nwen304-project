@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,8 +48,28 @@
         .navbar .icon {
             margin-right: 8px;
         }
+
+        /* 新しいスタイル */
+        .card {
+            background-color: white;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #news li {
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
+
 <body>
     <div class="navbar">
         <a href="/"><i class="fas fa-home icon"></i>Home</a>
@@ -56,7 +77,36 @@
         <a href="/login"><i class="fas fa-sign-in-alt icon"></i>Login</a>
         <a href="/register"><i class="fas fa-user-plus icon"></i>Register</a>
     </div>
+    <div class="card" id="weather-section">
+        <h3 class="section-title">Weather</h3>
+        <div id="weather"></div>
+    </div>
+    <div class="card" id="news-section">
+        <h3 class="section-title">Top News</h3>
+        <ul id="news"></ul>
+    </div>
     <h2>Welcome to our Page!</h2>
     <p>Enjoy browsing our website!</p>
 </body>
-</html>
+<script>
+
+async function fetchWeather() {
+    const apiKey = '370ec73325035f836a6cdbcc22ec3181';
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`);
+    const data = await response.json();
+    document.getElementById('weather').innerText = `Tokyo: ${data.main.temp}°C`;
+}
+
+async function fetchNews() {
+    const apiKey = 'ec7fa3239492418fb269d22f9f96ef59';
+    const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`);
+    const data = await response.json();
+    const headlines = data.articles.map(article => `<li>${article.title}</li>`).join('');
+    document.getElementById('news').innerHTML = headlines;
+}
+
+window.onload = function() {
+    fetchWeather();
+    fetchNews();
+}
+</script>
