@@ -120,6 +120,12 @@ app.get('/item/:itemId', (req, res) => {
     if (!item) {
         return res.status(404).send('Item not found');
     }
+     // Set the headers
+     res.setHeader('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
+     res.setHeader('Expires', new Date(Date.now() + 3600000).toUTCString()); // 1 hour from now
+     res.setHeader('Last-Modified', new Date().toUTCString()); // Current server time
+     
+    
     res.json(item);
 });
 
@@ -141,7 +147,6 @@ app.delete('/item/:itemId', ensureAuthenticated, (req, res) => {
     if (itemIndex === -1) {
         return res.status(404).send('Item not found');
     }
-
     items.splice(itemIndex, 1);
     res.json({ msg: 'Item deleted' });
 });

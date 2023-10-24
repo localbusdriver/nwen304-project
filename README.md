@@ -111,5 +111,36 @@ purchaseHistory: The history of items purchased by the user.
 
 This model is used to support functionalities such as user registration, login, and password reset.
 
+🔍 Caching Header Test Cases using PowerShell
+
+Verify Cache-Control Header:
+
+$headers = Invoke-WebRequest -Uri http://localhost:3000/item/1 -Method Head | Select-Object -ExpandProperty Headers
+$headers['Cache-Control']
+
+output:public, max-age=3600
+
+Verify Expires Header:
+
+$headers = Invoke-WebRequest -Uri http://localhost:3000/item/1 -Method Head | Select-Object -ExpandProperty Headers
+$headers['Expires']
+
+output:Tue, 24 Oct 2023 12:30:23 GMT
+
+Verify Last-Modified or ETag Header:
+
+$headers = Invoke-WebRequest -Uri http://localhost:3000/item/1 -Method Head | Select-Object -ExpandProperty Headers
+$headers['Last-Modified']
+
+output:Tue, 24 Oct 2023 11:30:45 GMT
+
+Test for ETag:
+
+$headers = Invoke-WebRequest -Uri http://localhost:3000/item/1 -Method Head | Select-Object -ExpandProperty Headers
+$headers['ETag']
+
+output:W/"71-H0IKY7R1jhNj7sup6RXsVYTDWSI"
+
+
 
 
