@@ -223,14 +223,14 @@ app.get('/recommended-items', ensureAuthenticated, async (req, res) => {
 });
 
 app.get('/api/weather', async (req, res) => {
-    const apiKey = '370ec73325035f836a6cdbcc22ec3181';
+    const apiKey = process.env.WEATHER_API_KEY;
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Tokyo&appid=${apiKey}`);
     const data = await response.json();
     res.json({ temp: data.main.temp });
 });
 
 app.get('/api/news', async (req, res) => {
-    const apiKey = 'ec7fa3239492418fb269d22f9f96ef59';
+    const apiKey = process.env.NEWS_API_KEY;
     const response = await fetch(`https://newsapi.org/v2/top-headlines?country=jp&apiKey=${apiKey}`);
     const data = await response.json();
     res.json(data.articles);
