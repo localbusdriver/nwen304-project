@@ -1,8 +1,5 @@
 🌐 Nwen304 Project
 
-This is URL for the application
-https://nwen304-project-oj6vlskeja-ts.a.run.app/
-
 🌍 List of Exposed API
 User Registration: /register (GET, POST)
 User Login: /login (GET, POST)
